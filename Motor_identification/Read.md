@@ -1,11 +1,9 @@
-**Some requirements:
-
-*Raspberry pico 2W 
-*Python 3.13.0
-*Visual Studio Code
-*Everything on the same enviroment
-*pyqtgraph 
-*Pyserial
-*Scipy
-*Numpy
-*csv
+- Raspberry Pi Pico 2W
+- Python 3.13.0
+- Visual Studio Code
+- Everything in the same environment
+- pyqtgraph
+- Pyserial
+- Scipy
+- Numpy
+- csv
