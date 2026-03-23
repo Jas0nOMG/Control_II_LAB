@@ -108,23 +108,22 @@ end
 
 %% 4. POST-PROCESAMIENTO 
 
-% A. Filtrar datos no válidos
+
 validos = f_Hz > 0;
 f_Hz = f_Hz(validos); 
 Vi_V = Vi_V(validos); Vo_V = Vo_V(validos); 
 Ganancia_dB = Ganancia_dB(validos); 
 Fase_rad_temp = Fase_deg(validos); % Recuperamos la fase en radianes
 
-% B. MEJORA 2: Ordenar por frecuencia
-% Si grabaste los archivos en desorden, esto arregla la gráfica.
+
 [f_Hz, sort_idx] = sort(f_Hz);
 Vi_V = Vi_V(sort_idx);
 Vo_V = Vo_V(sort_idx);
 Ganancia_dB = Ganancia_dB(sort_idx);
 Fase_rad_temp = Fase_rad_temp(sort_idx);
 
-% C. MEJORA 3: Phase Unwrapping (Desenrollado) Inteligente
-% 'unwrap' detecta saltos bruscos de pi (180°) y los suaviza.
+
+
 Fase_rad_unwrapped = unwrap(Fase_rad_temp);
 Fase_deg = rad2deg(Fase_rad_unwrapped);
 
@@ -137,18 +136,18 @@ Resultados = table(f_Hz, omega_rad, Vi_V, Vo_V, Ganancia_K, Ganancia_dB, Fase_de
 disp('--- TABLA DE DATOS EXPERIMENTALES (RLC) ---');
 disp(Resultados);
 
-%% 5. MODELO TEÓRICO (SALIDA EN RESISTENCIA - PASA BANDA)
+%% 5. MODELO TEÓRICO
 f_teorica = logspace(1, 5, 10000); 
 w_t = 2 * pi * f_teorica;
 
-% --- DEFINICIÓN DE TÉRMINOS ---
+
 % H(jw) = (j * RCw) / [ (1 - LCw^2) + j(RCw) ]
 
 RCw = R * C * w_t;                 % Término común (Imag del den y magnitud del num)
 Re_denom = 1 - (L * C * w_t.^2);   % Parte Real del denominador
 Im_denom = RCw;                    % Parte Imaginaria del denominador
 
-% --- 1. MAGNITUD (Sin usar abs) ---
+% --- 1. MAGNITUD  ---
 % |Num| = RCw (La magnitud de j*RCw es simplemente RCw)
 % |Den| = sqrt( Real^2 + Imag^2 )
 mag_num = RCw;
@@ -160,7 +159,7 @@ mag_teorica_db = 20 * log10(mag_lineal);
 % --- 2. FASE (Sin usar angle) ---
 % Fase(H) = Fase(Numerador) - Fase(Denominador)
 
-% Fase Numerador: Como es puramente imaginario positivo (j*RCw), su fase es SIEMPRE 90 grados (pi/2)
+
 fase_num = pi/2; 
 
 % Fase Denominador: atan2(Imag, Real)
@@ -172,7 +171,7 @@ fase_rad = fase_num - fase_den;
 % Conversión a Grados
 fase_teorica_deg = rad2deg(fase_rad);
 
-% Nota: Ahora la gráfica de fase debería ir de +90 a -90 grados.
+
 
 %% 6. PLOT: TEORÍA VS EXPERIMENTAL
 figure('Color', 'w', 'Name', 'Bode RLC: Segundo Orden');
