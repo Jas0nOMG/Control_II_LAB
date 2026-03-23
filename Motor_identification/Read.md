@@ -1,6 +1,6 @@
 #  Motor Identification & Frequency Response Analysis
 
-**Unlock the secrets of DC motor dynamics.** This project instruments a DC motor to capture frequency response data and automatically identifies transfer function parameters using advanced nonlinear curve fitting.
+**Unlock the secrets of DC motor dynamics.** This work instruments a DC motor to capture frequency response data and automatically identifies transfer function parameters using advanced nonlinear curve fitting.
 
 ##  What's Inside?
 
